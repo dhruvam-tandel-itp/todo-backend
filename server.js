@@ -99,6 +99,32 @@ async function initializeDatabase() {
 
 // ---------------- GLOBAL ROUTE HANDLERS ----------------
 
+
+// HEALTH: Verifies application and database cluster health
+app.get('/health', async (req, res) => {
+    try {
+        // Ping both pools to verify end-to-end database connectivity
+        await Promise.all([
+            readerPool.query('SELECT 1'),
+            writerPool.query('SELECT 1')
+        ]);
+        
+        res.status(200).json({ 
+            status: 'healthy', 
+            timestamp: new Date().toISOString(),
+            database: 'connected' 
+        });
+    } catch (error) {
+        console.error('Health check failed:', error);
+        res.status(503).json({ 
+            status: 'unhealthy', 
+            timestamp: new Date().toISOString(),
+            error: 'Database connection failed' 
+        });
+    }
+});
+
+
 // GET: Read calls target your scale-out Aurora Reader Endpoint
 app.get('/api/todos', async (req, res) => {
     try {
