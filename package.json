@@ -1,14 +1,17 @@
 {
-  "name": "todo-api",
+  "name": "aurora-mysql-todo-backend",
   "version": "1.0.0",
+  "description": "Node.js Express backend using Aurora MySQL and AWS Secrets Manager",
+  "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
   "dependencies": {
     "@aws-sdk/client-secrets-manager": "^3.0.0",
-    "dotenv": "^16.0.0",
-    "express": "^5.0.0",
-    "mysql2": "^3.0.0"
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.9.3"
   }
 }
